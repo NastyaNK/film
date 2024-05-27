@@ -1,0 +1,70 @@
+### Auth
+
+POST localhost:9893/auth
+Content-Type: application/json
+
+{
+  "name":"Виктор",
+  "password":"jrgjgrjrgs"
+}
+
+### Reg
+
+POST localhost:9893/registration
+Content-Type: application/json
+
+{
+  "name":"Виктор",
+  "password":"jrgjgrjrgs",
+  "mail":"пчитус511"
+}
+### participant
+
+POST localhost:9893/participant
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTU1MjA5NDUsInVzZXIiOnsiaWQiOjE0LCJuYW1lIjoi0JLQuNC60YLQvtGAIiwicGFzc3dvcmQiOiIkMmEkMTAkYks2cEVab3prVkcyN010MThnRkpRZVN1ZjI4M2JXbEpJY0I2U2wzclNkZDU5Unp1TFNRLkMiLCJtYWlsIjoi0L_Rh9C40YLRg9GBNTExIn19.x_a4852FbmTHge_3z_FvoDuLGQ9fSVHOokjxkpUanQQ
+
+{
+  "room_id": 7
+}
+
+### invitation
+
+POST localhost:9893/participant
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTUzNDc5MjksInVzZXIiOnsiaWQiOjE0LCJuYW1lIjoi0JLQuNC60YLQvtGAIiwicGFzc3dvcmQiOiIkMmEkMTAkYks2cEVab3prVkcyN010MThnRkpRZVN1ZjI4M2JXbEpJY0I2U2wzclNkZDU5Unp1TFNRLkMiLCJtYWlsIjoi0L_Rh9C40YLRg9GBNTExIn19.Kz9Z3f4Gu8uEzBFkyJO9pIHCv5LyXqhqUrIGRWYpB10
+
+{
+  "room_id": 7,
+  "user_id":14
+}
+### CreateRoom
+
+POST localhost:9893/createRoom
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTM3Mjg4NDksInVzZXIiOnsiaWQiOjE0LCJuYW1lIjoi0JLQuNC60YLQvtGAIiwicGFzc3dvcmQiOiIkMmEkMTAkYks2cEVab3prVkcyN010MThnRkpRZVN1ZjI4M2JXbEpJY0I2U2wzclNkZDU5Unp1TFNRLkMiLCJtYWlsIjoi0L_Rh9C40YLRg9GBNTExIn19.P-bhRPEuHgddx-cEIjLavQmZJhPsFQLONYYilgxn6eE
+
+{
+"id_film": 1,
+"name": "первая",
+"is_public": true
+}
+### Ban
+
+POST localhost:9893/ban
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTU2OTYyMTgsInVzZXIiOnsiaWQiOjE0LCJuYW1lIjoi0JLQuNC60YLQvtGAIiwicGFzc3dvcmQiOiIkMmEkMTAkYks2cEVab3prVkcyN010MThnRkpRZVN1ZjI4M2JXbEpJY0I2U2wzclNkZDU5Unp1TFNRLkMiLCJtYWlsIjoi0L_Rh9C40YLRg9GBNTExIn19.PdGiBZoix_9ieekPbvCPfWDV7o7brVSj_vXFo4kvkUo
+
+{
+  "room_id": 7,
+  "user_id": 12
+}
+### Exit
+
+POST localhost:9893/exit
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTU3NzA3NDYsInVzZXIiOnsiaWQiOjE0LCJuYW1lIjoi0JLQuNC60YLQvtGAIiwicGFzc3dvcmQiOiIkMmEkMTAkYks2cEVab3prVkcyN010MThnRkpRZVN1ZjI4M2JXbEpJY0I2U2wzclNkZDU5Unp1TFNRLkMiLCJtYWlsIjoi0L_Rh9C40YLRg9GBNTExIn19.-0mFgB8cC96rd5qUZjriI_8NbhNhQjdT73cRw7dtOKE
+
+{
+  "room_id": 7
+}
