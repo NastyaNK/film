@@ -24,6 +24,7 @@ type Service struct {
 	repo *Repository
 }
 
+что то накалякали
 //	func searchFilms(db *sqlx.DB, filmNames string) error {
 //		query := "SELECT name, year, rating,image FROM film WHERE name LIKE '%' || $1 || '%'"
 //		rows, err := db.Query(query, filmNames)
