@@ -10,6 +10,7 @@ import (
 	"golang.org/x/crypto/bcrypt"
 	"io"
 	"log"
+	. "m/models"
 	http "net/http"
 	"os"
 	"regexp"
@@ -18,43 +19,6 @@ import (
 )
 
 var jwtKey = []byte("ключ") //ключ, который используется для подписи и проверки
-
-type Film struct {
-	Id     int     `json:"id"`
-	Name   string  `json:"name"`
-	Year   int     `json:"year"`
-	Plot   string  `json:"plot"`
-	Genre  string  `json:"genre"`
-	Rating float64 `json:"rating"`
-	Image  string  `json:"image"`
-}
-type People struct {
-	Id       int    `json:"id"`
-	Name     string `json:"name"`
-	Password string `json:"password"`
-	Mail     string `json:"mail"`
-}
-type Room struct {
-	Id     int    `json:"id"`
-	IdFilm int    `json:"id_film" db:"id_film"`
-	Name   string `json:"name"`
-	Public bool   `json:"is_public" db:"is_public"`
-}
-
-type UserRoom struct {
-	Id        int    `json:"id" db:"id"`
-	IdRoom    int    `json:"room_id" db:"room_id"`
-	IdUser    int    `json:"user_id" db:"user_id"`
-	Role      string `json:"role" db:"role"`
-	IsInvited bool   `json:"is_invited" db:"is_invited"`
-	Ban       bool   `json:"ban" db:"ban"`
-}
-type Messages struct {
-	Id     int    `json:"id"`
-	IdRoom int    `json:"id_room"`
-	IdUser int    `json:"id_user"`
-	Text   string `json:"text"`
-}
 
 type Service struct {
 	repo *Repository

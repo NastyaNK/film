@@ -4,20 +4,10 @@ import (
 	"errors"
 	"github.com/jmoiron/sqlx"
 	"golang.org/x/crypto/bcrypt"
-	"log"
+	. "m/models"
 )
 
-type Repository struct {
-	db *sqlx.DB
-}
-
-func connect() *Repository {
-	db, err := sqlx.Connect("postgres", "host=localhost port=5432 user=anastasia password=2553 dbname=movie sslmode=disable")
-	if err != nil {
-		log.Fatal(err)
-	}
-	return &Repository{db}
-}
+var DB *sqlx.DB
 
 func (repo *Repository) existUser(people People) (bool, error) {
 	var count int
@@ -50,27 +40,6 @@ func (repo *Repository) getUserByName(name string) (People, error) {
 	}
 	return people, nil
 }
-func (repo *Repository) addRoom(room Room, people People) error {
-	var roomID int64
-
-	tx, err := repo.db.Beginx() //запускаем транзакцию
-	if err != nil {
-		return errors.New("ошибка начала транзакции: " + err.Error())
-	}
-
-	err = tx.QueryRowx("INSERT INTO room (id_film, name, is_public) VALUES ($1, $2, $3) RETURNING id", room.IdFilm, room.Name, room.Public).Scan(&roomID)
-	if err != nil {
-		tx.Rollback() //если возникла ошибка в запросе откатываем все изменения
-		return errors.New("ошибка создания комнаты: " + err.Error())
-	}
-	_, err = tx.Exec("INSERT INTO room_user (room_id, user_id, role, is_invited, ban) VALUES ($1, $2, $3, $4, $5)", roomID, people.Id, "ADMIN", false, false)
-	if err != nil {
-		tx.Rollback()
-		return errors.New("ошибка создания комнаты: " + err.Error())
-	}
-
-	return tx.Commit() //фиксирует все изменения
-}
 
 func (repo *Repository) addParticipant(userRoom UserRoom) error {
 	_, err := repo.db.Exec("INSERT INTO room_user (room_id, user_id, role, is_invited, ban) VALUES ($1, $2, $3, $4, $5)", userRoom.IdRoom, userRoom.IdUser, userRoom.Role, userRoom.IsInvited, userRoom.Ban)
@@ -94,14 +63,7 @@ func (repo *Repository) updateParticipant(userRoom UserRoom) error {
 	}
 	return nil
 }
-func (repo *Repository) getRoom(id int) (Room, error) {
-	var room Room
-	err := repo.db.Get(&room, "select * from room where id=$1", id)
-	if err != nil {
-		return room, errors.New("Не удалось получить комнату" + err.Error())
-	}
-	return room, nil
-}
+
 func (repo *Repository) getUser(id int) (People, error) {
 	var user People
 	err := repo.db.Get(&user, "select * from people where id=$1", id)
@@ -110,13 +72,7 @@ func (repo *Repository) getUser(id int) (People, error) {
 	}
 	return user, nil
 }
-func (repo *Repository) deleteRoom(id int) error {
-	_, err := repo.db.Exec("DELETE FROM room WHERE id=$1", id)
-	if err != nil {
-		return errors.New("Удаление комнаты не удалось " + err.Error())
-	}
-	return nil
-}
+
 func (repo *Repository) deleteUserRoom(idUser, idRoom int) error {
 	_, err := repo.db.Exec("DELETE FROM room_user WHERE user_id=$1 and room_id=$2", idUser, idRoom)
 	if err != nil {
